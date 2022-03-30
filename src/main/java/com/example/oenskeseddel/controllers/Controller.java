@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
+import java.sql.SQLException;
+
 @org.springframework.stereotype.Controller
 public class Controller {
     UserDatahandler userDatahandler = new UserDatahandler();
@@ -30,12 +32,9 @@ public class Controller {
         return "redirect:/DinØnskeliste";
     }
     @PostMapping("/Opretter Bruger Nu")
-    public String OpretBruger(WebRequest email, WebRequest username, WebRequest password,WebRequest passwordRE){
+    public String OpretBruger(WebRequest email, WebRequest username, WebRequest password,WebRequest passwordRE) throws SQLException {
         if (password.equals(passwordRE)|| userDatahandler.isEmailValid(email.getParameter(String.valueOf(email)))){
-
             userDatahandler.OpretBruger(String.valueOf(email),String.valueOf(username),String.valueOf(password));
-
-
             return "redirect:/DinØnskeliste";
         }else{
             return "redirect:/Opret Bruger";
@@ -44,7 +43,7 @@ public class Controller {
 
 
     }
-    @PostMapping("/Loger Ind Nu")
+    @PostMapping("/Logger Ind Nu")
     public String LogInd(WebRequest username, WebRequest password){
         if (true){
             return "redirect:/DinØnskeliste";

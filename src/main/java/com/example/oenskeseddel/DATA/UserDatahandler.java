@@ -31,11 +31,16 @@ public class UserDatahandler {
         statement.execute(syntax);
     }
 
-    public void OpretBruger(String email, String username, String password){
+    public void OpretBruger(String email, String username, String password) throws SQLException {
+        statement.execute("USE ØNSKELISTE");
+        statement.execute("INSERT INTO BRUGERLISTE (email, username , password) VALUES ("+email+", "+username+", "+password+")");
 
     }
 
-    public void LogInd(){}
+    public void LogInd() throws SQLException {
+        statement.execute("USE ØNSKELISTE");
+        statement.execute("");
+    }
 
 
     public boolean isEmailValid(String parameter) {
