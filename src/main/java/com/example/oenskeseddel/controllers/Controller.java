@@ -11,18 +11,32 @@ public class Controller {
     public String index(){return "index";}
 
     @GetMapping("/Log Ind")
-    public String LogInd(){return "LogInd";}
+    public String LogIndSide(){return "LogInd";}
 
     @GetMapping("/Opret Bruger")
-    public String OpretBruger(){return "OpretBruger";}
+    public String OpretBrugerSide(){return "OpretBruger";}
 
-    @GetMapping("/MinØnskeListe")
-    public String minØnskeliste(){return "MinØnskeListe";}
+    @GetMapping("/DinØnskeListe")
+    public String DinØnskeliste(){return "DinØnskeListe";}
 
-    @PostMapping("/bruh")
-    public String bruh(WebRequest ønske){
+    @PostMapping("/OpretterListe")
+    public String OpretListe(WebRequest ønske){
 
-        return "redirect:/minØnskeliste";
+        return "redirect:/DinØnskeliste";
+    }
+    @PostMapping("/Opretter Bruger Nu")
+    public String OpretBruger(WebRequest email, WebRequest username, WebRequest password){
+
+        return "redirect:/DinØnskeliste";
+    }
+    @PostMapping("/Loger Ind Nu")
+    public String LogInd(WebRequest username, WebRequest password){
+        if (true){
+            return "redirect:/DinØnskeliste";
+        }else {
+            return "redirect:/DinØnskeliste";
+        }
+
     }
 
 }

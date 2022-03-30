@@ -11,6 +11,8 @@ body{
     align-items: center;
     top: 0;
     left: 0;
+    height: 100vh;
+    width: 99vw;
 }
 
 .header{
@@ -34,13 +36,29 @@ footer{
     height: 5%;
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: -5%;
 }
 
-.wishlist{
-    background: #c89d28;
+.menu{
+    background-color: #c89d28;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
     position: fixed;
-    width: 40%;
+    height: 80%;
+    width: 20%;
+}
+.menubutton{
+    background-color: gray;
+    color: ghostwhite;
+    text-align: center;
+    font-size: 100%;
+    display: inline-block;
+    padding: 2% 25% 2% 25%;
+    cursor: pointer;
+    margin: 1%;
+
+}
+.menutextfelt{
+    margin: 1%;
 }
