@@ -1,12 +1,17 @@
 package com.example.oenskeseddel.controllers;
 
 
+import com.example.oenskeseddel.DATA.ListDatahandler;
+import com.example.oenskeseddel.DATA.UserDatahandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
 @org.springframework.stereotype.Controller
 public class Controller {
+    UserDatahandler userDatahandler = new UserDatahandler();
+    ListDatahandler listDatahandler = new ListDatahandler();
+
     @GetMapping("/")
     public String index(){return "index";}
 
@@ -25,9 +30,19 @@ public class Controller {
         return "redirect:/DinØnskeliste";
     }
     @PostMapping("/Opretter Bruger Nu")
-    public String OpretBruger(WebRequest email, WebRequest username, WebRequest password){
+    public String OpretBruger(WebRequest email, WebRequest username, WebRequest password,WebRequest passwordRE){
+        if (password.equals(passwordRE)|| userDatahandler.isEmailValid(email.getParameter(String.valueOf(email)))){
 
-        return "redirect:/DinØnskeliste";
+            userDatahandler.OpretBruger(String.valueOf(email),String.valueOf(username),String.valueOf(password));
+
+
+            return "redirect:/DinØnskeliste";
+        }else{
+            return "redirect:/Opret Bruger";
+        }
+
+
+
     }
     @PostMapping("/Loger Ind Nu")
     public String LogInd(WebRequest username, WebRequest password){

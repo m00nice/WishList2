@@ -10,13 +10,18 @@
 <body>
 <section class="menu">
     <h1>Forbidden</h1>
+    <form method="post" action="/Opretter bruger nu">
     <p>Indtast email</p>
-    <input class="menutextfelt" id="email" type="text" name="email"/>
+    <input class="menutextfelt" id="email" type="text" name="email" placeholder="Email" required="required"/>
     <p>Indtast brugernavn</p>
-    <input class="menutextfelt" id="username" type="text" name="username"/>
-    <p>Indtast kodeord</p>
-    <input class="menutextfelt" id="password" type="password" name="password"/>
-    <button class="menubutton">Opret bruger</button>
+    <input class="menutextfelt" id="username" type="text" name="username" placeholder="Brugernavn" required="required"/>
+    <p>Indtast Adgangskode</p>
+    <input class="menutextfelt" id="password" type="password" name="password" placeholder="Adgangskode" required="required"/>
+    <p>Gentast Adgangskode</p>
+    <input class="menutextfelt" id="passwordRE" type="password" name="password" placeholder="Gentast Adgangskode" required="required"/>
+
+    <button type="submit" name="opret bruger" id="opret bruger" class="menubutton">Opret bruger</button>
+    </form>
 </section>
 </body>
 <footer>
