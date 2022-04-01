@@ -37,9 +37,19 @@ public class UserDatahandler {
 
     }
 
-    public void LogInd() throws SQLException {
+    public boolean LogInd(String username, String password) throws SQLException {
         statement.execute("USE ØNSKELISTE");
-        statement.execute("");
+        statement.execute("SELECT ");
+        while (true){
+            if(true){
+
+
+                return true;
+            }
+        }
+
+
+
     }
 
 

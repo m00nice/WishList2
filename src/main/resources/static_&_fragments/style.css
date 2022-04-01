@@ -82,3 +82,11 @@ footer{
     text-align: left;
     font-family: Calibri;
 }
+.backtoMainButton{
+    background-image: url("download.png");
+    background-size: cover;
+    width: 20%;
+    height: 10%;
+    display: inline;
+
+    }

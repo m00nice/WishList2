@@ -33,8 +33,8 @@ public class Controller {
     }
     @PostMapping("/Opretter Bruger Nu")
     public String OpretBruger(WebRequest email, WebRequest username, WebRequest password,WebRequest passwordRE) throws SQLException {
-        if (password.equals(passwordRE)|| userDatahandler.isEmailValid(email.getParameter(String.valueOf(email)))){
-            userDatahandler.OpretBruger(String.valueOf(email),String.valueOf(username),String.valueOf(password));
+        if (password.getParameter("password").equals(passwordRE.getParameter("passwordRE"))|| userDatahandler.isEmailValid(email.getParameter("email"))){
+            userDatahandler.OpretBruger(email.getParameter("email"), username.getParameter("username"),password.getParameter("password"));
             return "redirect:/DinØnskeliste";
         }else{
             return "redirect:/Opret Bruger";
