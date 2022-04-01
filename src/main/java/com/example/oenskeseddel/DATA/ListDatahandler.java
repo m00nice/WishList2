@@ -10,7 +10,7 @@ public class ListDatahandler {
 
     {
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "", "");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "m00nice", "123");
         } catch (SQLException e) {
             e.printStackTrace();
         }
