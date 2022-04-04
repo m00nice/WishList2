@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Opret Bruger</title>
@@ -11,17 +11,14 @@
 <section class="menu">
     <button class="backtoMainButton" onclick="window.location.href='index.html'"></button>
     <h1>Forbidden</h1>
-    <form method="POST" action="/Opretter bruger nu">
-    <p>Indtast email</p>
-    <input class="menutextfelt" id="email" type="text" name="email" placeholder="Email" required="required"/>
-    <p>Indtast brugernavn</p>
-    <input class="menutextfelt" id="username" type="text" name="username" placeholder="Brugernavn" required="required"/>
-    <p>Indtast Adgangskode</p>
-    <input class="menutextfelt" id="password" type="password" name="password" placeholder="Adgangskode" required="required"/>
-    <p>Gentast Adgangskode</p>
-    <input class="menutextfelt" id="passwordRE" type="password" name="password" placeholder="Gentast Adgangskode" required="required"/>
 
-    <button type="submit" name="opret bruger" id="opret bruger" class="menubutton">Opret bruger</button>
+    <form action="#" th:action="@{/Opret Bruger}" th:object="${bruger}" method="post">
+        <p>Email: <input type="text" th:field="*{email}" /></p>
+        <p>Username: <input type="text" th:field="*{username}" /></p>
+        <p>Password: <input type="password" th:field="*{password}" /></p>
+        <p>Repeat Password: <input type="password" th:field="*{passwordRE}" /></p>
+        <p><input type="submit" value="Submit" /><input type="reset" value="Reset"></p>
+
     </form>
 </section>
 </body>

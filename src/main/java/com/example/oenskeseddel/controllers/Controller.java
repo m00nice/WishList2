@@ -1,26 +1,30 @@
 package com.example.oenskeseddel.controllers;
 
 
-import com.example.oenskeseddel.DATA.ListDatahandler;
-import com.example.oenskeseddel.DATA.UserDatahandler;
+import com.example.oenskeseddel.DATA.Arbiter;
+
+import com.example.oenskeseddel.temp.Bruger;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
 import java.sql.SQLException;
 
+
 @org.springframework.stereotype.Controller
 public class Controller {
-    UserDatahandler userDatahandler = new UserDatahandler();
-    ListDatahandler listDatahandler = new ListDatahandler();
+     Arbiter arbiter = new Arbiter();
+
+
 
     @GetMapping("/")
     public String index(){return "index";}
 
-    @GetMapping("/Log Ind")
+    @GetMapping("/LogInd")
     public String LogIndSide(){return "LogInd";}
 
-    @GetMapping("/Opret Bruger")
+    @GetMapping("/OpretBruger")
     public String OpretBrugerSide(){return "OpretBruger";}
 
     @GetMapping("/DinØnskeListe")
@@ -31,26 +35,28 @@ public class Controller {
 
         return "redirect:/DinØnskeliste";
     }
-    @PostMapping("/Opretter Bruger Nu")
-    public String OpretBruger(WebRequest email, WebRequest username, WebRequest password,WebRequest passwordRE) throws SQLException {
-        if (password.getParameter("password").equals(passwordRE.getParameter("passwordRE"))|| userDatahandler.isEmailValid(email.getParameter("email"))){
-            userDatahandler.OpretBruger(email.getParameter("email"), username.getParameter("username"),password.getParameter("password"));
-            return "redirect:/DinØnskeliste";
-        }else{
-            return "redirect:/Opret Bruger";
-        }
+//   v
+    @PostMapping("/Opret Bruger")
+    public String OpretBruger(@ModelAttribute Bruger bruger) throws SQLException {
 
+        arbiter.createUser(bruger.getEmail(), bruger.getUsername(), bruger.getPassword(), bruger.getPasswordRE());
+
+        return "redirect:/Opret Bruger";
+    }
+//   ^
+
+    @GetMapping("/MinØnskeListe")
+    public String getWishList(){
+
+        return "bruh";
+    }
+    @PostMapping("/MinØnskeListe")
+    public String addWishToWishlist(){
+
+        return "bruh";
+    }
 
 
     }
-    @PostMapping("/Logger Ind Nu")
-    public String LogInd(WebRequest username, WebRequest password){
-        if (true){
-            return "redirect:/DinØnskeliste";
-        }else {
-            return "redirect:/DinØnskeliste";
-        }
 
-    }
 
-}
