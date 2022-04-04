@@ -4,6 +4,7 @@ package com.example.oenskeseddel.controllers;
 import com.example.oenskeseddel.DATA.Arbiter;
 
 import com.example.oenskeseddel.temp.Bruger;
+import com.example.oenskeseddel.temp.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,11 +31,19 @@ public class Controller {
     @GetMapping("/DinØnskeListe")
     public String DinØnskeliste(){return "DinØnskeListe";}
 
-    @PostMapping("/OpretterListe")
-    public String OpretListe(WebRequest ønske){
 
-        return "redirect:/DinØnskeliste";
+
+
+    @PostMapping("/DinØnskeListe")
+    public String OpretListe(@ModelAttribute List list){
+
+        arbiter.addWishToWishlistFromView(list.getWish(),UserID);
+
+        return "redirect:/DinØnskeListe";
     }
+
+
+
 //   v
     @PostMapping("/Opret Bruger")
     public String OpretBruger(@ModelAttribute Bruger bruger) throws SQLException {
