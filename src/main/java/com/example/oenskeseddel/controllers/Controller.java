@@ -4,7 +4,7 @@ package com.example.oenskeseddel.controllers;
 import com.example.oenskeseddel.DATA.Arbiter;
 
 import com.example.oenskeseddel.temp.Bruger;
-import com.example.oenskeseddel.temp.List;
+import com.example.oenskeseddel.temp.WList;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,34 +28,23 @@ public class Controller {
         return "LogInd";
     }
 
-    @GetMapping("/OpretBruger")
-    public String OpretBrugerSide(Model model){
-        model.addAttribute("bruger", new Bruger());
-        return "OpretBruger";
-    }
-
-    @GetMapping("/DinØnskeListe")
-    public String DinØnskeliste(){return "DinØnskeListe";}
 
 
     @PostMapping("/LogInd")
     public String LogInd(@ModelAttribute Bruger bruger) throws SQLException {
 
-        if(arbiter.confirmLogIn(bruger.getUsername(), bruger.getPassword())==true){
+        if(arbiter.confirmLogIn(bruger.getUsername(), bruger.getPassword())){
             return "/DinØnskeListe";
         }
         else {return "redirect:/LogInd";}
     }
 
 
-    @PostMapping("/DinØnskeListe")
-    public String OpretListe(@ModelAttribute List list) throws SQLException {
-        int UserID = 0;
-        arbiter.addWishToWishlistFromView(list.getWish(),UserID);
-
-        return "redirect:/DinØnskeListe";
+    @GetMapping("/OpretBruger")
+    public String OpretBrugerSide(Model model){
+        model.addAttribute("bruger", new Bruger());
+        return "OpretBruger";
     }
-
 
 
 //   v
@@ -68,15 +57,24 @@ public class Controller {
     }
 //   ^
 
-    @GetMapping("/MinØnskeListe")
-    public String getWishList(){
-
-        return "bruh";
+    @GetMapping("/DinØnskeListe")
+    public String getWishList(Model model){
+        model.addAttribute("wlist", new WList());
+        return "/DinØnskeListe";
     }
-    @PostMapping("/MinØnskeListe")
-    public String addWishToWishlist(){
-
-        return "bruh";
+    @PostMapping("/DinØnskeListe")
+    public String addWishToWishlist(@ModelAttribute WList wlist) throws SQLException {
+        int UserID = 0;
+        arbiter.addWishToWishlistFromView(wlist.getWish(),UserID);
+        return "/DinØnskeListe";
+    }
+    @GetMapping("/DinØnskeListe/empty")
+    public String createFirstWishList(Model model) throws SQLException {
+        int UserID = 1;
+        WList wishlist = new WList();
+        wishlist.createWList(arbiter.postWishListToView(UserID));
+        model.addAttribute("wish",wishlist);
+         return "wish";
     }
 
 

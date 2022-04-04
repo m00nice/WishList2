@@ -11,6 +11,7 @@ public class Arbiter {
     {
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "m00nice", "123");
+            System.out.println("we linked");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -21,15 +22,16 @@ public class Arbiter {
     {
         try {
             statement = connection.createStatement();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void createUser(String email, String Username, String Password, String PasswordRE) throws SQLException {
-        Pattern pat = Pattern.compile("^(.+)@(.+)$");
+                Pattern pat = Pattern.compile("^(.+)@(.+)$");
         if(Objects.equals(Password, PasswordRE) || pat.matcher(email).matches()){
-            statement.execute("INSERT INTO brugerliste (email,usernavn,password) VALUES ("+email+","+Username+","+Password+")");
+            statement.execute("INSERT INTO brugerliste (email,usernavn,password) VALUES ('"+email+"', '"+Username+"', '"+Password+"');");
         }
     }
 
@@ -56,7 +58,7 @@ public class Arbiter {
 
 
     public ArrayList postWishListToView(int UserID) throws SQLException {
-        ArrayList arrayList = new ArrayList();
+        ArrayList<String> arrayList = new ArrayList();
         ResultSet resultSet = statement.executeQuery("SELECT wish FROM wishlist"+UserID);
         while(resultSet.next()){
             arrayList.add(resultSet.getString("wish"));

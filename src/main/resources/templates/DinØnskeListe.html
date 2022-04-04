@@ -11,7 +11,20 @@
 
 <body>
 <section class="wishlist">
-    <h1>Dine Ønskelister</h1>
+    <h1>Din Ønskelister</h1>
+
+        <p>...<span th:text="${wlist}"></span>...</p>
+        <ul th:each="wish : ${wishlist}">
+            <li th:text="${wish}"></li>
+        </ul>
+
+    <form action="#" th:action="@{/DinØnskeListe}" th:object="${wlist}" method="post">
+
+        <p>Ønske: <input type="text" th:field="*{wish}" /></p>
+
+        <p><input type="submit" value="Submit"/></p>
+
+    </form>
 
 
 
