@@ -18,13 +18,13 @@ public class Arbiter {
     }
 
     Statement statement;
-    Statement statement2;
+    Statement statementResultSet;
     Statement statement3;
 
     {
         try {
             statement = connection.createStatement();
-            statement2 = connection.createStatement();
+            statementResultSet = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             statement3 = connection.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -35,54 +35,34 @@ public class Arbiter {
                 Pattern pat = Pattern.compile("^(.+)@(.+)$");
         if(Objects.equals(Password, PasswordRE) || pat.matcher(email).matches()){
             statement.execute("INSERT INTO brugerliste (email,usernavn,password) VALUES ('"+email+"', '"+Username+"', '"+Password+"');");
-
-            ResultSet resultSetUser = statement.executeQuery("SELECT usernavn FROM brugerliste");
-            ResultSet resultSetPassword = statement2.executeQuery("SELECT password FROM brugerliste");
-            ResultSet resultSetID = statement3.executeQuery("SELECT id FROM brugerliste");
-            resultSetID.beforeFirst();
-            resultSetPassword.beforeFirst();
-            resultSetUser.beforeFirst();
-            while(resultSetPassword.next() || resultSetUser.next() || resultSetID.next()) {
-                if (resultSetPassword.getString("password").equals(Password) || resultSetUser.getString("usernavn").equals(Username)) {
-                    int UserID = resultSetID.getInt("id");
-                    statement.execute("CREATE TABLE 'ØNSKELISTE'.'wishlist"+UserID+"'('wish'VARCHAR(64)NOT NULL);");
-                }
-
-            }
-
-
-
-
+                        }
         }
-    }
 
-    public boolean confirmLogIn(String Username,String Password) throws SQLException {
-        boolean confirmation = false;
-        ResultSet resultSetUser = statement.executeQuery("SELECT usernavn FROM brugerliste");
-        ResultSet resultSetPassword = statement.executeQuery("SELECT password FROM brugerliste");
-        while (resultSetPassword.next()||resultSetUser.next()) {
-            if (Password.equals(resultSetPassword.getString("password")) || Username.equals(resultSetUser.getString("usernavn"))) {
-                confirmation = true;
+
+    public int confirmLogIn(String Username,String Password) throws SQLException {
+        int UserID = 0;
+        ResultSet resultSetUserPassword = statementResultSet.executeQuery("SELECT id,usernavn,password FROM brugerliste");
+        while (resultSetUserPassword.next()) {
+            if (Password.equals(resultSetUserPassword.getString("password")) || Username.equals(resultSetUserPassword.getString("usernavn"))) {
+                UserID = resultSetUserPassword.getInt("id");
             }
         }
-        return confirmation;
+        return UserID;
     }
 
 
-    public void createWishlistToModel(int UserID) throws SQLException {
-        statement.execute("CREATE TABLE 'ØNSKELISTE'.'wishlist"+UserID+"'('wish'VARCHAR(64)NOT NULL);");
-    }
-
-    public void addWishToWishlistFromView(String wish, int UserID) throws SQLException {
-        statement.execute("INSERT INTO  wishlist"+UserID+"(wish) VALUES ("+wish+")");
+        public void addWishToWishlistFromView(String wish, int UserID) throws SQLException {
+        statement.execute("INSERT INTO `ønskeliste`.`wishlists` (`id`, `wish`) VALUES ('"+UserID+"', '"+wish+"');");
     }
 
 
     public ArrayList postWishListToView(int UserID) throws SQLException {
         ArrayList<String> arrayList = new ArrayList();
-        ResultSet resultSet = statement.executeQuery("SELECT wish FROM wishlist"+UserID);
+        ResultSet resultSet = statementResultSet.executeQuery("SELECT wish,id FROM wishlists");
         while(resultSet.next()){
-            arrayList.add(resultSet.getString("wish"));
+            if(resultSet.getInt("id") == UserID) {
+                arrayList.add(resultSet.getString("wish"));
+            }
         }
 
         return arrayList;

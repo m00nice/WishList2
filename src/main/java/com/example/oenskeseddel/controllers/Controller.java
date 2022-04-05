@@ -32,8 +32,8 @@ public class Controller {
 
     @PostMapping("/LogInd")
     public String LogInd(@ModelAttribute Bruger bruger) throws SQLException {
-
-        if(arbiter.confirmLogIn(bruger.getUsername(), bruger.getPassword())){
+        int UserID = arbiter.confirmLogIn(bruger.getUsername(), bruger.getPassword());
+        if(UserID==0){
 
         }
         return "LogInd";
