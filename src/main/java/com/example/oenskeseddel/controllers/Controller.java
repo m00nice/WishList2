@@ -34,9 +34,9 @@ public class Controller {
     public String LogInd(@ModelAttribute Bruger bruger) throws SQLException {
 
         if(arbiter.confirmLogIn(bruger.getUsername(), bruger.getPassword())){
-            return "/DinØnskeListe";
+
         }
-        else {return "LogInd";}
+        return "LogInd";
     }
 
 
@@ -68,8 +68,8 @@ public class Controller {
         arbiter.addWishToWishlistFromView(wlist.getWish(),UserID);
         return "DinØnskeListe";
     }
-    @GetMapping("/DinØnskeListe")
-    public String showWishList(Model model) throws SQLException {
+    @GetMapping("/DinØnskeListe/empty")
+    public String createFirstWishList(Model model) throws SQLException {
         int UserID = 1;
         WList wishlist = new WList();
         wishlist.createWList(arbiter.postWishListToView(UserID));
