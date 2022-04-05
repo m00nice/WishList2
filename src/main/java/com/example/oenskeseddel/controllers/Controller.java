@@ -36,7 +36,7 @@ public class Controller {
         if(arbiter.confirmLogIn(bruger.getUsername(), bruger.getPassword())){
             return "/DinØnskeListe";
         }
-        else {return "redirect:/LogInd";}
+        else {return "LogInd";}
     }
 
 
@@ -53,28 +53,28 @@ public class Controller {
 
         arbiter.createUser(bruger.getEmail(), bruger.getUsername(), bruger.getPassword(), bruger.getPasswordRE());
 
-        return "redirect:/Opret Bruger";
+        return "OpretBruger";
     }
 //   ^
 
     @GetMapping("/DinØnskeListe")
     public String getWishList(Model model){
         model.addAttribute("wlist", new WList());
-        return "/DinØnskeListe";
+        return "DinØnskeListe";
     }
     @PostMapping("/DinØnskeListe")
     public String addWishToWishlist(@ModelAttribute WList wlist) throws SQLException {
         int UserID = 0;
         arbiter.addWishToWishlistFromView(wlist.getWish(),UserID);
-        return "/DinØnskeListe";
+        return "DinØnskeListe";
     }
-    @GetMapping("/DinØnskeListe/empty")
-    public String createFirstWishList(Model model) throws SQLException {
+    @GetMapping("/DinØnskeListe")
+    public String showWishList(Model model) throws SQLException {
         int UserID = 1;
         WList wishlist = new WList();
         wishlist.createWList(arbiter.postWishListToView(UserID));
         model.addAttribute("wish",wishlist);
-         return "wish";
+         return "DinØnskeListe";
     }
 
 
