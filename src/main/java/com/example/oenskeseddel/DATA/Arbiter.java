@@ -31,12 +31,14 @@ public class Arbiter {
         }
     }
 
-    public void createUser(String email, String Username, String Password, String PasswordRE) throws SQLException {
+    public boolean createUser(String email, String Username, String Password, String PasswordRE) throws SQLException {
                 Pattern pat = Pattern.compile("^(.+)@(.+)$");
         if(Objects.equals(Password, PasswordRE) || pat.matcher(email).matches()){
             statement.execute("INSERT INTO brugerliste (email,usernavn,password) VALUES ('"+email+"', '"+Username+"', '"+Password+"');");
-                        }
+        return true;
         }
+        return false;
+    }
 
 
     public int confirmLogIn(String Username,String Password) throws SQLException {

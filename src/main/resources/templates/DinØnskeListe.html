@@ -14,7 +14,7 @@
     <h1>Din Ønskeliste</h1>
 
         <p><span th:text="${wlist}"></span></p>
-        <ul th:each="wish : ${wlist}">
+        <ul th:if="${session.containsValue(UseID)}" th:each="wish : ${wlist}">
             <li th:text="${wish}"></li>
         </ul>
 

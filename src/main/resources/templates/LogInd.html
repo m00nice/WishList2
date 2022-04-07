@@ -11,12 +11,14 @@
 <section class="menu">
     <button class="backtoMainButton" onclick="window.location.href='index.html'"></button>
 
-    <form action="#" th:action="@{/LogInd}" th:object="${bruger}" method="post">
 
-        <p>Username: <input type="text" th:field="*{username}" /></p>
-        <p>Password: <input type="password" th:field="*{password}" /></p>
+    <form action="#" th:action="@{/LogInd}" method="post">
+        <label for="username"></label>
+        <p>Username: <input type="text" id="username" name="username" autofocus="autofocus" th:field="*{username}" required/></p>
+        <label for="password"></label>
+        <p>Password: <input type="password" id="password" name="password" autofocus="autofocus" th:field="*{password}" required/></p>
 
-        <p><input type="submit" value="Submit"/></p>
+        <p><input type="submit" value="Log ind"/></p>
 
 </form>
 
