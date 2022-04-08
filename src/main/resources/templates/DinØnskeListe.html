@@ -14,15 +14,16 @@
     <h1>Din Ønskeliste</h1>
 
     <form action="#" th:action="@{/DinØnskeListe}" th:object="${wishlist}" method="get">
+        
         <p><span th:text="${wishlist}"></span></p>
-        <ul th:if="${session}" th:each="wish : ${wishlist}">
+        <ul th:each="wish : ${wishlist}">
             <li th:text="${wish}"></li>
         </ul>
     </form>
 
     <form action="#" th:action="@{/DinØnskeListe}" th:object="${wishlist}" method="post">
-
-        <p>Nyt Ønske: <input type="text" th:field="*{wish}" /></p>
+        <label for="wish"></label>
+        <p>Nyt Ønske: <input type="text" id="wish" name="wish" /></p>
 
         <p><input type="submit" value="Submit"/></p>
 

@@ -41,7 +41,7 @@ public class Arbiter {
     }
 
 
-    public int confirmLogIn(String Username,String Password) throws SQLException {
+    public int InGetUserID(String Username, String Password) throws SQLException {
         int UserID = 1;
         ResultSet resultSetUserPassword = statementResultSet.executeQuery("SELECT id,usernavn,password FROM brugerliste");
         while (resultSetUserPassword.next()) {
