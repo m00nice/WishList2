@@ -13,12 +13,14 @@
 <section class="wishlist">
     <h1>Din Ønskeliste</h1>
 
-        <p><span th:text="${wlist}"></span></p>
-        <ul th:if="${session.containsValue(UseID)}" th:each="wish : ${wlist}">
+    <form action="#" th:action="@{/DinØnskeListe}" th:object="${wishlist}" method="get">
+        <p><span th:text="${wishlist}"></span></p>
+        <ul th:if="${session}" th:each="wish : ${wishlist}">
             <li th:text="${wish}"></li>
         </ul>
+    </form>
 
-    <form action="#" th:action="@{/DinØnskeListe}" th:object="${wlist}" method="post">
+    <form action="#" th:action="@{/DinØnskeListe}" th:object="${wishlist}" method="post">
 
         <p>Nyt Ønske: <input type="text" th:field="*{wish}" /></p>
 

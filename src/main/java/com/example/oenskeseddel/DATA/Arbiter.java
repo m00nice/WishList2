@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.regex.Pattern;
-
+//@Martin Anberg
 public class Arbiter {
     Connection connection;
 

@@ -5,10 +5,6 @@ import com.example.oenskeseddel.DATA.Arbiter;
 
 import com.example.oenskeseddel.temp.Bruger;
 import com.example.oenskeseddel.temp.WList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,32 +21,26 @@ public class Controller {
     @GetMapping("/")
     public String index(){return "index";}
 
-    //USER
+    //USER @Martin Anberg
 
     @RequestMapping("/LogInd")
     public String LogIndSide(){
         return "LogInd";
     }
-    @RequestMapping("/LogInd-error.html")
-    public String LogIndSide(Model model){
-        model.addAttribute("logindError",true);
-        return "LogInd";
-    }
-
-
 
     @PostMapping("/LogInd")
-    public String LogInd(@RequestParam String username, @RequestParam String password, HttpSession session) throws SQLException {
+    public String LogInd(@ModelAttribute(name="bruger") Bruger bruger, Model model, HttpSession session) throws SQLException {
+        String username = bruger.getUsername();
+        String password = bruger.getPassword();
+        model.addAttribute(username, password);
         int UserID = arbiter.confirmLogIn(username, password);
         if(UserID != 0){
             session.setAttribute("id",UserID);
-        return "/DinØnskeListe";
+            return "DinØnskeListe";
         }else {
             return "LogInd";
         }
-
     }
-
 
     @GetMapping("/OpretBruger")
     public String OpretBrugerSide(){
@@ -58,7 +48,7 @@ public class Controller {
     }
 
     @PostMapping("/Opret Bruger")
-    public String OpretBruger(@ModelAttribute Bruger bruger,HttpSession session) throws SQLException {
+    public String OpretBruger(@ModelAttribute(name = "bruger") Bruger bruger,HttpSession session) throws SQLException {
 
         if(arbiter.createUser(bruger.getEmail(), bruger.getUsername(), bruger.getPassword(), bruger.getPasswordRE())){
             int UserID = arbiter.confirmLogIn(bruger.getUsername(), bruger.getPassword());
@@ -72,9 +62,9 @@ public class Controller {
 
 
 
-    //WISHLIST
-    @GetMapping("/DinØnskeListe/empty")
-    public String createFirstWishList(Model model,@RequestParam int UserID) throws SQLException {
+    //WISHLIST @Martin Anberg
+    @GetMapping("/DinØnskeListe")
+    public String createFirstWishList(@ModelAttribute("wishlist") Model model,@RequestParam int UserID) throws SQLException {
         WList wishlist = new WList();
         wishlist.createWList(arbiter.postWishListToView(UserID));
         model.addAttribute("wish",wishlist);
